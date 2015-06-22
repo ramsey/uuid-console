@@ -1,0 +1,41 @@
+{
+    "name": "ramsey/uuid-console",
+    "description": "A console application for generating UUIDs with ramsey/uuid.",
+    "type": "project",
+    "keywords": [
+        "uuid",
+        "identifier",
+        "guid",
+        "console",
+        "cli"
+    ],
+    "homepage": "https://github.com/ramsey/uuid-console",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ben Ramsey",
+            "email": "ben@benramsey.com",
+            "homepage": "http://benramsey.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ramsey/uuid-console/issues",
+        "source": "https://github.com/ramsey/uuid-console"
+    },
+    "require": {
+        "php": ">=5.4",
+        "ramsey/uuid": "3.0.*@dev",
+        "symfony/console": "^2.7",
+        "moontoast/math": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7",
+        "squizlabs/php_codesniffer": "^2.3",
+        "jakub-onderka/php-parallel-lint": "^0.9.0",
+        "satooshi/php-coveralls": "^0.6.1"
+    },
+    "bin": ["bin/uuid"],
+    "autoload": {
+        "psr-4": {"Ramsey\\Uuid\\Console\\": "src/"}
+    }
+}

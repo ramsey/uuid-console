@@ -13,7 +13,7 @@
 ## About
 
 ramsey/uuid-console is a console application for generating UUIDs with
-[ramsey/uuid](ramsey-uuid).
+[ramsey/uuid][ramsey-uuid].
 
 ## Installation
 

@@ -1,7 +1,7 @@
-# ramsey/uuid Console Changelog
+# ramsey/uuid-console Changelog
 
 ## 1.0.0
 
-_Released: TBD_
+_Released: 2015-09-28_
 
-    * Separated from ramsey/uuid console application into a separate package
+    * Separated from [ramsey/uuid](https://github.com/ramsey/uuid) library into a stand-alone package

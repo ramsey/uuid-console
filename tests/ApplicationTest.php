@@ -14,7 +14,6 @@ class ApplicationTest extends TestCase
         restore_error_handler();
 
         $this->assertInstanceOf('Ramsey\\Uuid\\Console\\Application', $app);
-        $this->assertEquals('uuid', $app->getName());
-        $this->assertEquals(\Ramsey\Uuid\Uuid::VERSION, $app->getVersion());
+        $this->assertEquals('ramsey/uuid-console', $app->getName());
     }
 }

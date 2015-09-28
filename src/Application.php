@@ -26,6 +26,6 @@ class Application extends BaseApplication
     public function __construct()
     {
         Util\ErrorHandler::register();
-        parent::__construct('uuid', Uuid::VERSION);
+        parent::__construct('ramsey/uuid-console', '1.0');
     }
 }

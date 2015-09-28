@@ -24,7 +24,7 @@
     },
     "require": {
         "php": ">=5.4",
-        "ramsey/uuid": "3.0.*@dev",
+        "ramsey/uuid": "^3.0",
         "symfony/console": "^2.7",
         "moontoast/math": "^1.1"
     },

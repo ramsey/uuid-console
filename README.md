@@ -80,7 +80,7 @@ information.
 
 
 [ramsey-uuid]: https://github.com/ramsey/uuid
-[packagist]: https://packagist.org/packages/ramsey/uuid
+[packagist]: https://packagist.org/packages/ramsey/uuid-console
 [composer]: http://getcomposer.org/
 [contributing]: https://github.com/ramsey/uuid-console/blob/master/CONTRIBUTING.md
 [license]: https://github.com/ramsey/uuid-console/blob/master/LICENSE

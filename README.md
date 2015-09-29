@@ -1,19 +1,19 @@
 # ramsey/uuid-console
 
-[![Gitter Chat](https://img.shields.io/badge/gitter-join_chat-brightgreen.svg?style=flat-square)](https://gitter.im/ramsey/uuid)
-[![Source Code](http://img.shields.io/badge/source-ramsey/uuid--console-blue.svg?style=flat-square)](https://github.com/ramsey/uuid-console)
-[![Latest Version](https://img.shields.io/github/release/ramsey/uuid-console.svg?style=flat-square)](https://github.com/ramsey/uuid-console/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/ramsey/uuid-console/blob/master/LICENSE)
-[![Build Status](https://img.shields.io/travis/ramsey/uuid-console/master.svg?style=flat-square)](https://travis-ci.org/ramsey/uuid-console)
-[![HHVM Status](https://img.shields.io/hhvm/ramsey/uuid-console.svg?style=flat-square)](http://hhvm.h4cc.de/package/ramsey/uuid-console)
-[![Scrutinizer](https://img.shields.io/scrutinizer/g/ramsey/uuid-console/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/ramsey/uuid-console/)
-[![Coverage Status](https://img.shields.io/coveralls/ramsey/uuid-console/master.svg?style=flat-square)](https://coveralls.io/r/ramsey/uuid-console?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/ramsey/uuid-console.svg?style=flat-square)](https://packagist.org/packages/ramsey/uuid-console)
-
-## About
+[![Gitter Chat][badge-gitter]][gitter]
+[![Source Code][badge-source]][source]
+[![Latest Version][badge-release]][release]
+[![Software License][badge-license]][license]
+[![Build Status][badge-build]][build]
+[![HHVM Status][badge-hhvm]][hhvm]
+[![Scrutinizer][badge-quality]][quality]
+[![Coverage Status][badge-coverage]][coverage]
+[![Total Downloads][badge-downloads]][downloads]
 
 ramsey/uuid-console is a console application for generating UUIDs with
 [ramsey/uuid][ramsey-uuid].
+
+This project adheres to a [Contributor Code of Conduct][conduct]. By participating in this project and its community, you are expected to uphold this code.
 
 ## Installation
 
@@ -74,7 +74,7 @@ Contributions are welcome! Please read [CONTRIBUTING][] for details.
 
 ## Copyright and License
 
-The ramsey/uuid library is copyright © [Ben Ramsey](https://benramsey.com/) and
+The ramsey/uuid-console library is copyright © [Ben Ramsey](https://benramsey.com/) and
 licensed for use under the MIT License (MIT). Please see [LICENSE][] for more
 information.
 
@@ -83,4 +83,23 @@ information.
 [packagist]: https://packagist.org/packages/ramsey/uuid-console
 [composer]: http://getcomposer.org/
 [contributing]: https://github.com/ramsey/uuid-console/blob/master/CONTRIBUTING.md
+
+[badge-gitter]: https://img.shields.io/badge/gitter-join_chat-brightgreen.svg?style=flat-square
+[badge-source]: http://img.shields.io/badge/source-ramsey/uuid--console-blue.svg?style=flat-square
+[badge-release]: https://img.shields.io/github/release/ramsey/uuid-console.svg?style=flat-square
+[badge-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[badge-build]: https://img.shields.io/travis/ramsey/uuid-console/master.svg?style=flat-square
+[badge-hhvm]: https://img.shields.io/hhvm/ramsey/uuid-console.svg?style=flat-square
+[badge-quality]: https://img.shields.io/scrutinizer/g/ramsey/uuid-console/master.svg?style=flat-square
+[badge-coverage]: https://img.shields.io/coveralls/ramsey/uuid-console/master.svg?style=flat-square
+[badge-downloads]: https://img.shields.io/packagist/dt/ramsey/uuid-console.svg?style=flat-square
+
+[gitter]: https://gitter.im/ramsey/uuid
+[source]: https://github.com/ramsey/uuid-console
+[release]: https://github.com/ramsey/uuid-console/releases
 [license]: https://github.com/ramsey/uuid-console/blob/master/LICENSE
+[build]: https://travis-ci.org/ramsey/uuid-console
+[hhvm]: http://hhvm.h4cc.de/package/ramsey/uuid-console
+[quality]: https://scrutinizer-ci.com/g/ramsey/uuid-console/
+[coverage]: https://coveralls.io/r/ramsey/uuid-console?branch=master
+[downloads]: https://packagist.org/packages/ramsey/uuid-console

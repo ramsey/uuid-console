@@ -15,10 +15,12 @@ class ErrorHandlerTest extends TestCase
             'handle',
         );
 
-        $originalHandler = set_error_handler(function () {});
+        $originalHandler = set_error_handler(function () {
+        });
 
         ErrorHandler::register();
-        $testHandler = set_error_handler(function () {});
+        $testHandler = set_error_handler(function () {
+        });
 
         // Set handler back to original
         set_error_handler($originalHandler);

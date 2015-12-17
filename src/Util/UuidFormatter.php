@@ -20,7 +20,7 @@ use Ramsey\Uuid\Console\Util\Formatter\V2Formatter;
 use Ramsey\Uuid\Console\Util\Formatter\V3Formatter;
 use Ramsey\Uuid\Console\Util\Formatter\V4Formatter;
 use Ramsey\Uuid\Console\Util\Formatter\V5Formatter;
-use Symfony\Component\Console\Helper\TableHelper;
+use Symfony\Component\Console\Helper\Table;
 
 class UuidFormatter
 {
@@ -55,7 +55,7 @@ class UuidFormatter
         }
     }
 
-    public function write(TableHelper $table, UuidInterface $uuid)
+    public function write(Table $table, UuidInterface $uuid)
     {
         $table->addRows(array(
             array('encode:', 'STR:', (string) $uuid),

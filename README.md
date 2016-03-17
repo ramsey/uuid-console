@@ -80,7 +80,7 @@ information.
 
 
 [ramsey-uuid]: https://github.com/ramsey/uuid
-[conduct]: https://github.com/ramsey/uuid-console/blob/master/CONDUCT.md
+[conduct]: https://github.com/ramsey/uuid-console/blob/master/CODE_OF_CONDUCT.md
 [packagist]: https://packagist.org/packages/ramsey/uuid-console
 [composer]: http://getcomposer.org/
 [contributing]: https://github.com/ramsey/uuid-console/blob/master/CONTRIBUTING.md

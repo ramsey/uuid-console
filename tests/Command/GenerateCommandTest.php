@@ -381,8 +381,6 @@ class GenerateCommandTest extends TestCase
      * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
      * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
      * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     * @expectedException \Ramsey\Uuid\Console\Exception
-     * @expectedExceptionMessage The name argument is required for version 3 or 5 UUIDs
      */
     public function testExecuteForUuidSpecifyVersion3WithoutName()
     {
@@ -394,6 +392,14 @@ class GenerateCommandTest extends TestCase
         $output = new TestOutput();
 
         $this->execute->invoke($generate, $input, $output);
+
+        $this->assertCount(1, $output->messages);
+
+        foreach ($output->messages as $uuid) {
+            $this->assertTrue(Uuid::isValid($uuid));
+            $this->assertEquals(3, Uuid::fromString($uuid)->getVersion());
+            $this->assertEquals('c87ee674-4ddc-3efe-a74e-dfe25da5d7b3', $uuid);
+        }
     }
 
     /**
@@ -554,8 +560,6 @@ class GenerateCommandTest extends TestCase
      * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
      * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
      * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     * @expectedException \Ramsey\Uuid\Console\Exception
-     * @expectedExceptionMessage The name argument is required for version 3 or 5 UUIDs
      */
     public function testExecuteForUuidSpecifyVersion5WithoutName()
     {
@@ -567,6 +571,14 @@ class GenerateCommandTest extends TestCase
         $output = new TestOutput();
 
         $this->execute->invoke($generate, $input, $output);
+
+        $this->assertCount(1, $output->messages);
+
+        foreach ($output->messages as $uuid) {
+            $this->assertTrue(Uuid::isValid($uuid));
+            $this->assertEquals(5, Uuid::fromString($uuid)->getVersion());
+            $this->assertEquals('4ebd0208-8328-5d69-8c44-ec50939c0967', $uuid);
+        }
     }
 
     /**

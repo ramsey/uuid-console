@@ -148,9 +148,6 @@ class GenerateCommand extends Command
             case 3:
             case 5:
                 $ns = $this->validateNamespace($namespace);
-                if (empty($name)) {
-                    throw new Exception('The name argument is required for version 3 or 5 UUIDs');
-                }
                 if ($version == 3) {
                     $uuid = Uuid::uuid3($ns, $name);
                 } else {

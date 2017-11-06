@@ -12,6 +12,8 @@ sudo: false
 
 matrix:
   include:
+    - php: 5.4
+      env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
     - php: 5.5
       env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
     - php: 5.6
@@ -19,9 +21,21 @@ matrix:
     - php: 7.0
       env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
     - php: 7.1
-      env: COMPOSER_FLAGS='--prefer-latest'
+      env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
     - php: nightly
       env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
+    - php: 5.4
+      env: COMPOSER_FLAGS='--prefer-latest'
+    - php: 5.5
+      env: COMPOSER_FLAGS='--prefer-latest'
+    - php: 5.6
+      env: COMPOSER_FLAGS='--prefer-latest'
+    - php: 7.0
+      env: COMPOSER_FLAGS='--prefer-latest'
+    - php: 7.1
+      env: COMPOSER_FLAGS='--prefer-latest'
+    - php: nightly
+      env: COMPOSER_FLAGS='--prefer-latest'
   fast_finish: true
   allow_failures:
     - php: nightly

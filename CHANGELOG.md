@@ -1,5 +1,11 @@
 # ramsey/uuid-console Changelog
 
+## 1.1.2
+
+_Released: 2017-11-06_
+
+* Add support for symfony/console v4 ([#3](https://github.com/ramsey/uuid-console/pull/3))
+
 ## 1.1.1
 
 _Released: 2017-02-02_

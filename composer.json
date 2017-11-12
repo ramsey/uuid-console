@@ -29,7 +29,7 @@
         "moontoast/math": "^1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.7|^5.0",
+        "phpunit/phpunit": "^4.8.35|^5.7|^6.4",
         "squizlabs/php_codesniffer": "^2.3",
         "jakub-onderka/php-parallel-lint": "^0.9.0",
         "satooshi/php-coveralls": "^0.6.1"

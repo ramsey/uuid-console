@@ -13,6 +13,7 @@
 
 namespace Ramsey\Uuid\Console\Util;
 
+use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Console\Util\Formatter\V1Formatter;
@@ -57,10 +58,18 @@ class UuidFormatter
 
     public function write(Table $table, UuidInterface $uuid)
     {
-        $table->addRows(array(
+        $encodeRows = array(
             array('encode:', 'STR:', (string) $uuid),
             array('',        'INT:', (string) $uuid->getInteger()),
-        ));
+        );
+
+        if ($uuid->getVersion() === 1 && class_exists('Ramsey\Uuid\Codec\OrderedTimeCodec')) {
+            $factory = clone Uuid::getFactory();
+            $codec = new OrderedTimeCodec($factory->getUuidBuilder());
+            $encodeRows[] = array('', 'ORD:', Uuid::fromBytes($codec->encodeBinary($uuid)));
+        }
+
+        $table->addRows($encodeRows);
 
         if ($uuid->getVariant() == Uuid::RFC_4122) {
             $table->addRows(array(

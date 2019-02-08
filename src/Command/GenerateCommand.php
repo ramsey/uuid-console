@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Ramsey\Uuid\Console\Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\Generator\CombGenerator;
-use Ramsey\Uuid\Codec\GuidStringCodec;
 use Ramsey\Uuid\FeatureSet;
 use Ramsey\Uuid\UuidFactory;
 

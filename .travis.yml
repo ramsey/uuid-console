@@ -7,6 +7,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
   - nightly
 
 sudo: false
@@ -25,6 +26,8 @@ matrix:
       env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
     - php: 7.2
       env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
+    - php: 7.3
+      env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
     - php: nightly
       env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
     - php: 5.4
@@ -38,6 +41,8 @@ matrix:
     - php: 7.1
       env: COMPOSER_FLAGS='--prefer-latest'    
     - php: 7.2
+      env: COMPOSER_FLAGS='--prefer-latest'
+    - php: 7.3
       env: COMPOSER_FLAGS='--prefer-latest'
     - php: nightly
       env: COMPOSER_FLAGS='--prefer-latest'

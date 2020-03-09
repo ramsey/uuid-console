@@ -32,7 +32,7 @@
         "phpunit/phpunit": "^4.8.35|^5.7|^6.4",
         "squizlabs/php_codesniffer": "^2.3",
         "jakub-onderka/php-parallel-lint": "^0.9.0",
-        "satooshi/php-coveralls": "^0.6.1"
+        "satooshi/php-coveralls": "^1.1.0"
     },
     "bin": ["bin/uuid"],
     "autoload": {

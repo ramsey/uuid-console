@@ -14,6 +14,7 @@
 namespace Ramsey\Uuid\Console\Util;
 
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
+use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Console\Util\Formatter\V1Formatter;
@@ -58,9 +59,15 @@ class UuidFormatter
 
     public function write(Table $table, UuidInterface $uuid)
     {
+        try {
+            $integer = (string) $uuid->getInteger();
+        } catch (UnsatisfiedDependencyException $exception) {
+            $integer = 'N/A, you need Moontoast\Math\BigNumber';
+        }
+
         $encodeRows = array(
             array('encode:', 'STR:', (string) $uuid),
-            array('',        'INT:', (string) $uuid->getInteger()),
+            array('',        'INT:', $integer),
         );
 
         if ($uuid->getVersion() === 1 && class_exists('Ramsey\Uuid\Codec\OrderedTimeCodec')) {

@@ -25,11 +25,11 @@
     "require": {
         "php": "^5.4 || ^7 || ^8",
         "ramsey/uuid": "^3",
-        "symfony/console": "^2.7 || ^3 || ^4",
-        "moontoast/math": "^1.1"
+        "symfony/console": "^2.7 || ^3 || ^4"
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^1",
+        "moontoast/math": "^1.1",
         "phpunit/phpunit": "^4.8.36 || ^5.7 || ^6.5 || ^7",
         "squizlabs/php_codesniffer": "^3.5"
     },

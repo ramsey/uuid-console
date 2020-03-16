@@ -76,7 +76,11 @@ class DecodeCommandTest extends TestCase
      */
     public function testExecuteForVersion1Uuid()
     {
-        $expected = file_get_contents('tests/console-mocks/testExecuteForVersion1Uuid.txt');
+        if (class_exists('Ramsey\Uuid\Codec\OrderedTimeCodec')) {
+            $expected = file_get_contents('tests/console-mocks/testExecuteForVersion1UuidWithOrd.txt');
+        } else {
+            $expected = file_get_contents('tests/console-mocks/testExecuteForVersion1Uuid.txt');
+        }
 
         $input = new StringInput('2ddbf60e-7fc4-11e3-a5ac-080027cd5e4d');
         $input->bind($this->decode->getDefinition());
@@ -147,6 +151,24 @@ class DecodeCommandTest extends TestCase
         $expected = file_get_contents('tests/console-mocks/testExecuteForVersion5Uuid.txt');
 
         $input = new StringInput('886313e1-3b8a-5372-9b90-0c9aee199e5d');
+        $input->bind($this->decode->getDefinition());
+
+        $output = new BufferedOutput();
+
+        $this->execute->invoke($this->decode, $input, $output);
+
+        $this->assertEquals($expected, $output->fetch());
+    }
+
+    public function testExecuteForOrderedTimeUuid()
+    {
+        if (!class_exists('Ramsey\Uuid\Codec\OrderedTimeCodec')) {
+            $this->markTestSkipped('Ramsey\Uuid\Codec\OrderedTimeCodec does not exist');
+        }
+
+        $expected = file_get_contents('tests/console-mocks/testExecuteForOrderedTimeUuid.txt');
+
+        $input = new StringInput('11e92985-9992-1bec-a7e2-8c85901b62fa -o');
         $input->bind($this->decode->getDefinition());
 
         $output = new BufferedOutput();

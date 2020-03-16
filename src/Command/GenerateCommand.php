@@ -119,7 +119,7 @@ class GenerateCommand extends Command
             $uuids[] = $this->createUuid(
                 $input->getArgument('version'),
                 $input->getArgument('namespace'),
-                $input->getArgument('name')
+                $input->getArgument('name') ?: ''
             );
         }
 

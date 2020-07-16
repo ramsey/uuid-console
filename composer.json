@@ -24,7 +24,7 @@
     },
     "require": {
         "php": "^5.4 || ^7 || ^8",
-        "ramsey/uuid": "^3",
+        "ramsey/uuid": "^3 || ^4",
         "symfony/console": "^2.7 || ^3 || ^4 || ^5"
     },
     "require-dev": {

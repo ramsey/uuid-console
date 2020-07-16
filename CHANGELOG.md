@@ -1,5 +1,11 @@
 # ramsey/uuid-console Changelog
 
+## 1.1.4
+
+_Released: 2020-07-16_
+
+* Add support for ramsey/uuid v4
+
 ## 1.1.3
 
 _Released: 2020-07-16_

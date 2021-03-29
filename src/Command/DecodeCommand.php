@@ -82,6 +82,8 @@ class DecodeCommand extends Command
         (new UuidFormatter())->write($table, $uuid);
 
         $table->render($output);
+
+        return 0;
     }
 
     protected function createTable(OutputInterface $output)

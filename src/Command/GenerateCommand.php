@@ -125,6 +125,8 @@ class GenerateCommand extends Command
         foreach ($uuids as $uuid) {
             $output->writeln((string) $uuid);
         }
+
+        return 0;
     }
 
     /**

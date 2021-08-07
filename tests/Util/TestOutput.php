@@ -1,4 +1,5 @@
 <?php
+
 namespace Ramsey\Uuid\Console\Util;
 
 use Symfony\Component\Console\Output\Output;

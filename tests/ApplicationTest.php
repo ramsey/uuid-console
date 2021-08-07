@@ -1,4 +1,5 @@
 <?php
+
 namespace Ramsey\Uuid\Console;
 
 class ApplicationTest extends TestCase

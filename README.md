@@ -1,20 +1,31 @@
-# ramsey/uuid-console
+<h1 align="center">ramsey/uuid-console</h1>
 
-[![Source Code][badge-source]][source]
-[![Latest Version][badge-release]][release]
-[![Software License][badge-license]][license]
-[![Build Status][badge-build]][build]
-[![Coverage Status][badge-coverage]][coverage]
-[![Total Downloads][badge-downloads]][downloads]
+<p align="center">
+    <strong>A console application for generating UUIDs with <a href="https://github.com/ramsey/uuid">ramsey/uuid</a></strong>
+</p>
+
+<p align="center">
+    <a href="https://github.com/ramsey/uuid-console"><img src="http://img.shields.io/badge/source-ramsey/uuid--console-blue.svg?style=flat-square" alt="Source Code"></a>
+    <a href="https://packagist.org/packages/ramsey/uuid-console"><img src="https://img.shields.io/packagist/v/ramsey/uuid-console.svg?style=flat-square&label=release" alt="Download Package"></a>
+    <a href="https://php.net"><img src="https://img.shields.io/packagist/php-v/ramsey/uuid-console.svg?style=flat-square&colorB=%238892BF" alt="PHP Programming Language"></a>
+    <a href="https://github.com/ramsey/uuid-console/blob/master/LICENSE"><img src="https://img.shields.io/packagist/l/ramsey/uuid-console.svg?style=flat-square&colorB=darkcyan" alt="Read License"></a>
+    <a href="https://github.com/ramsey/uuid-console/actions/workflows/continuous-integration.yml"><img src="https://img.shields.io/github/workflow/status/ramsey/uuid-console/build/main?style=flat-square&logo=github" alt="Build Status"></a>
+    <a href="https://codecov.io/gh/ramsey/uuid-console"><img src="https://img.shields.io/codecov/c/gh/ramsey/uuid-console?label=codecov&logo=codecov&style=flat-square" alt="Codecov Code Coverage"></a>
+    <a href="https://shepherd.dev/github/ramsey/uuid-console"><img src="https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fshepherd.dev%2Fgithub%2Framsey%2Fuuid-console%2Fcoverage" alt="Psalm Type Coverage"></a>
+</p>
+
+## About
 
 ramsey/uuid-console is a console application for generating UUIDs with
-[ramsey/uuid][ramsey-uuid].
+[ramsey/uuid](https://github.com/ramsey/uuid).
 
-This project adheres to a [Contributor Code of Conduct][conduct]. By participating in this project and its community, you are expected to uphold this code.
+This project adheres to a [code of conduct](CODE_OF_CONDUCT.md).
+By participating in this project and its community, you are expected to
+uphold this code.
 
 ## Installation
 
-The preferred method of installation is via [Packagist][] and [Composer][].
+Install this package as a dependency using [Composer](https://getcomposer.org).
 
 ```bash
 composer require ramsey/uuid-console
@@ -22,7 +33,7 @@ composer require ramsey/uuid-console
 
 This will install a reference to the console tool in `./vendor/bin/uuid`.
 
-## Examples
+## Usage
 
 If installed in your project, you may execute the console application from the
 command line:
@@ -67,31 +78,18 @@ For help, just type `./vendor/bin/uuid` and read the help information.
 
 ## Contributing
 
-Contributions are welcome! Please read [CONTRIBUTING][] for details.
+Contributions are welcome! To contribute, please familiarize yourself with
+[CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Coordinated Disclosure
+
+Keeping user information safe and secure is a top priority, and we welcome the
+contribution of external security researchers. If you believe you've found a
+security issue in software that is maintained in this repository, please read
+[SECURITY.md](SECURITY.md) for instructions on submitting a vulnerability report.
 
 ## Copyright and License
 
 The ramsey/uuid-console library is copyright © [Ben Ramsey](https://benramsey.com/) and
-licensed for use under the MIT License (MIT). Please see [LICENSE][] for more
+licensed for use under the MIT License (MIT). Please see [LICENSE](LICENSE) for more
 information.
-
-
-[ramsey-uuid]: https://github.com/ramsey/uuid
-[conduct]: https://github.com/ramsey/uuid-console/blob/master/CODE_OF_CONDUCT.md
-[packagist]: https://packagist.org/packages/ramsey/uuid-console
-[composer]: http://getcomposer.org/
-[contributing]: https://github.com/ramsey/uuid-console/blob/master/CONTRIBUTING.md
-
-[badge-source]: http://img.shields.io/badge/source-ramsey/uuid--console-blue.svg?style=flat-square
-[badge-release]: https://img.shields.io/packagist/v/ramsey/uuid-console.svg?style=flat-square
-[badge-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[badge-build]: https://img.shields.io/travis/ramsey/uuid-console/master.svg?style=flat-square
-[badge-coverage]: https://img.shields.io/coveralls/ramsey/uuid-console/master.svg?style=flat-square
-[badge-downloads]: https://img.shields.io/packagist/dt/ramsey/uuid-console.svg?style=flat-square
-
-[source]: https://github.com/ramsey/uuid-console
-[release]: https://packagist.org/packages/ramsey/uuid-console
-[license]: https://github.com/ramsey/uuid-console/blob/master/LICENSE
-[build]: https://travis-ci.org/ramsey/uuid-console
-[coverage]: https://coveralls.io/r/ramsey/uuid-console?branch=master
-[downloads]: https://packagist.org/packages/ramsey/uuid-console

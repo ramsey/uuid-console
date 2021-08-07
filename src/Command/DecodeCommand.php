@@ -83,7 +83,7 @@ class DecodeCommand extends Command
 
         $table->render($output);
 
-        return self::SUCCESS;
+        return 0;
     }
 
     protected function createTable(OutputInterface $output)

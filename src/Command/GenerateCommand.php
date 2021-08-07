@@ -126,7 +126,7 @@ class GenerateCommand extends Command
             $output->writeln((string) $uuid);
         }
 
-        return self::SUCCESS;
+        return 0;
     }
 
     /**

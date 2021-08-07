@@ -56,7 +56,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 * Add support for symfony/console v3.
-* Add project [Contributor Code of Conduct](https://github.com/ramsey/uuid-console/blob/master/CONDUCT.md).
+* Add project [Contributor Code of Conduct](https://github.com/ramsey/uuid-console/blob/main/CONDUCT.md).
 
 ## 1.0.0 - 2015-09-28
 

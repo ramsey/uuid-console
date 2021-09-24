@@ -28,6 +28,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use function assert;
 use function filter_var;
+use function method_exists;
 
 use const FILTER_VALIDATE_INT;
 
@@ -46,7 +47,7 @@ class GenerateCommand extends Command
                 'version',
                 InputArgument::OPTIONAL,
                 'The UUID version to generate. Supported are version "1", "3", '
-                . '"4" and "5".',
+                . '"4", "5" and "6".',
                 1,
             )
             ->addArgument(
@@ -152,8 +153,14 @@ class GenerateCommand extends Command
                 } else {
                     return Uuid::uuid5($ns, (string) $name);
                 }
+            case 6:
+                if (!method_exists(Uuid::class, 'uuid6')) {
+                    throw new Exception('Your version of ramsey/uuid does not support uuid6.');
+                }
+
+                return Uuid::uuid6();
             default:
-                throw new Exception('Invalid UUID version. Supported are version "1", "3", "4", and "5".');
+                throw new Exception('Invalid UUID version. Supported are version "1", "3", "4", "5" and "6".');
         }
     }
 

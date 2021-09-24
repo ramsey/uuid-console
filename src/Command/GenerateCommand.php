@@ -43,7 +43,7 @@ class GenerateCommand extends Command
                 'version',
                 InputArgument::OPTIONAL,
                 'The UUID version to generate. Supported are version "1", "3", '
-                . '"4" and "5".',
+                . '"4", "5" and "6".',
                 1
             )
             ->addArgument(
@@ -156,8 +156,14 @@ class GenerateCommand extends Command
                     $uuid = Uuid::uuid5($ns, $name);
                 }
                 break;
+            case 6:
+                if (!method_exists('\Ramsey\Uuid\Uuid', 'uuid6')) {
+                    throw new Exception('Your version of ramsey/uuid don\'t support uuid6.');
+                }
+                $uuid = Uuid::uuid6();
+                break;
             default:
-                throw new Exception('Invalid UUID version. Supported are version "1", "3", "4", and "5".');
+                throw new Exception('Invalid UUID version. Supported are version "1", "3", "4", "5" and "6".');
         }
 
         return $uuid;

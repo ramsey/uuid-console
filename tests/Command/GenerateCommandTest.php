@@ -247,6 +247,120 @@ class GenerateCommandTest extends TestCase
     /**
      * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
      * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
+     */
+    public function testExecuteForUuidSpecifyVersion6()
+    {
+        if (!method_exists('\Ramsey\Uuid\Uuid', 'uuid6')) {
+            $this->markTestSkipped('Not supported version of ramsey/uuid');
+        }
+
+        $generate = new GenerateCommand();
+
+        $input = new StringInput('6');
+        $input->bind($generate->getDefinition());
+
+        $output = new TestOutput();
+
+        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($generate, $input, $output);
+
+        $this->assertCount(1, $output->messages);
+        $this->assertTrue(Uuid::isValid($output->messages[0]));
+        $this->assertEquals(6, Uuid::fromString($output->messages[0])->getVersion());
+    }
+
+    /**
+     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
+     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
+     */
+    public function testExecuteForUuidSpecifyVersion6WithCount()
+    {
+        if (!method_exists('\Ramsey\Uuid\Uuid', 'uuid6')) {
+            $this->markTestSkipped('Not supported version of ramsey/uuid');
+        }
+        $generate = new GenerateCommand();
+
+        //
+        // Test using the "-c" option
+        //
+
+        $input1 = new StringInput('6 -c 3');
+        $input1->bind($generate->getDefinition());
+
+        $output1 = new TestOutput();
+
+        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($generate, $input1, $output1);
+
+        $this->assertCount(3, $output1->messages);
+
+        foreach ($output1->messages as $uuid) {
+            $this->assertTrue(Uuid::isValid($uuid));
+            $this->assertEquals(6, Uuid::fromString($uuid)->getVersion());
+        }
+
+        //
+        // Test using the "--count" option
+        //
+
+        $input2 = new StringInput('6 --count=8');
+        $input2->bind($generate->getDefinition());
+
+        $output2 = new TestOutput();
+
+        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($generate, $input2, $output2);
+
+        $this->assertCount(8, $output2->messages);
+
+        foreach ($output2->messages as $uuid) {
+            $this->assertTrue(Uuid::isValid($uuid));
+            $this->assertEquals(6, Uuid::fromString($uuid)->getVersion());
+        }
+    }
+
+
+    /**
+     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
+     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
+     */
+    public function testExecuteForUuidSpecifyVersion6OnUnsupportedVersion()
+    {
+        if (!method_exists($this, 'expectException')) {
+            $this->markTestSkipped('This version of PHPUnit does not have expectException()');
+        }
+        if (method_exists('\Ramsey\Uuid\Uuid', 'uuid6')) {
+            $this->markTestSkipped('Not supported version of ramsey/uuid');
+        }
+        $generate = new GenerateCommand();
+
+        //
+        // Test using the "-c" option
+        //
+
+        $input1 = new StringInput('6');
+        $input1->bind($generate->getDefinition());
+
+        $output1 = new TestOutput();
+
+        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute->setAccessible(true);
+
+        $this->expectException('Ramsey\\Uuid\\Console\\Exception');
+        $this->expectExceptionMessage('Your version of ramsey/uuid don\'t support uuid6.');
+
+        $execute->invoke($generate, $input1, $output1);
+    }
+
+    /**
+     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
+     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
      * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
      */
     public function testExecuteForUuidSpecifyVersion3WithDnsNs()
@@ -672,7 +786,7 @@ class GenerateCommandTest extends TestCase
 
         $generate = new GenerateCommand();
 
-        $input = new StringInput('6');
+        $input = new StringInput('7');
         $input->bind($generate->getDefinition());
 
         $output = new TestOutput();
@@ -681,7 +795,7 @@ class GenerateCommandTest extends TestCase
         $execute->setAccessible(true);
 
         $this->expectException('Ramsey\\Uuid\\Console\\Exception');
-        $this->expectExceptionMessage('Invalid UUID version. Supported are version "1", "3", "4", and "5".');
+        $this->expectExceptionMessage('Invalid UUID version. Supported are version "1", "3", "4", "5" and "6".');
 
         $execute->invoke($generate, $input, $output);
     }

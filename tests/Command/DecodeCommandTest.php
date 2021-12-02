@@ -20,8 +20,8 @@ class DecodeCommandTest extends TestCase
     {
         $decode = new DecodeCommand();
 
-        $this->assertEquals('decode', $decode->getName());
-        $this->assertEquals('Decode a UUID and dump information about it', $decode->getDescription());
+        $this->assertSame('decode', $decode->getName());
+        $this->assertSame('Decode a UUID and dump information about it', $decode->getDescription());
     }
 
     public function testExecuteForInvalidUuid(): void

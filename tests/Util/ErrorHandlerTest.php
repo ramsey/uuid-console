@@ -26,7 +26,7 @@ class ErrorHandlerTest extends TestCase
         // Set handler back to original
         set_error_handler($originalHandler);
 
-        $this->assertEquals($expected, $testHandler);
+        $this->assertSame($expected, $testHandler);
     }
 
     /**

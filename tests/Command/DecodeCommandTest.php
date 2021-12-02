@@ -15,8 +15,8 @@ class DecodeCommandTest extends TestCase
     {
         $decode = new DecodeCommand();
 
-        $this->assertEquals('decode', $decode->getName());
-        $this->assertEquals('Decode a UUID and dump information about it', $decode->getDescription());
+        $this->assertSame('decode', $decode->getName());
+        $this->assertSame('Decode a UUID and dump information about it', $decode->getDescription());
     }
 
     /**
@@ -65,7 +65,7 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $this->assertSame($expected, $output->fetch());
     }
 
     /**
@@ -92,7 +92,7 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $this->assertSame($expected, $output->fetch());
     }
 
     /**
@@ -115,7 +115,7 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $this->assertSame($expected, $output->fetch());
     }
 
     /**
@@ -138,7 +138,7 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $this->assertSame($expected, $output->fetch());
     }
 
     /**
@@ -161,7 +161,7 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $this->assertSame($expected, $output->fetch());
     }
 
     /**
@@ -184,7 +184,7 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $this->assertSame($expected, $output->fetch());
     }
 
     public function testExecuteForOrderedTimeUuid()
@@ -208,6 +208,6 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $this->assertSame($expected, $output->fetch());
     }
 }

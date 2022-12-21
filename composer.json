@@ -19,7 +19,6 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
-        "ext-random": "*",
         "ramsey/uuid": "^3.9.7 || ^4",
         "symfony/console": "^5.0 || ^6.0"
     },

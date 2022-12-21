@@ -8,32 +8,34 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://packagist.org/packages/ramsey/uuid-console Packagist
- * @link https://github.com/ramsey/uuid-console GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Uuid\Console\Command;
 
+use Ramsey\Uuid\Console\Exception;
+use Ramsey\Uuid\FeatureSet;
+use Ramsey\Uuid\Generator\CombGenerator;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidFactory;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Ramsey\Uuid\Console\Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\Generator\CombGenerator;
-use Ramsey\Uuid\FeatureSet;
-use Ramsey\Uuid\UuidFactory;
+
+use function filter_var;
+
+use const FILTER_VALIDATE_INT;
 
 /**
  * Provides the console command to generate UUIDs
  */
 class GenerateCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -44,7 +46,7 @@ class GenerateCommand extends Command
                 InputArgument::OPTIONAL,
                 'The UUID version to generate. Supported are version "1", "3", '
                 . '"4" and "5".',
-                1
+                1,
             )
             ->addArgument(
                 'namespace',
@@ -52,74 +54,68 @@ class GenerateCommand extends Command
                 'For version 3 or 5 UUIDs, the namespace to create a UUID for. '
                 . 'May be either a UUID in string representation or an identifier '
                 . 'for internally pre-defined namespace UUIDs (currently known '
-                . 'are "ns:DNS", "ns:URL", "ns:OID", and "ns:X500").'
+                . 'are "ns:DNS", "ns:URL", "ns:OID", and "ns:X500").',
             )
             ->addArgument(
                 'name',
                 InputArgument::OPTIONAL,
                 'For version 3 or 5 UUIDs, the name to create a UUID for. '
-                . 'The name is a string of arbitrary length.'
+                . 'The name is a string of arbitrary length.',
             )
             ->addOption(
                 'count',
                 'c',
                 InputOption::VALUE_REQUIRED,
                 'Generate count UUIDs instead of just a single one.',
-                1
+                1,
             )
             ->addOption(
                 'comb',
                 null,
                 InputOption::VALUE_NONE,
-                'For version 4 UUIDs, uses the COMB strategy to generate the random data.'
+                'For version 4 UUIDs, uses the COMB strategy to generate the random data.',
             )
             ->addOption(
                 'guid',
                 'g',
                 InputOption::VALUE_NONE,
-                'Returns a GUID formatted UUID.'
+                'Returns a GUID formatted UUID.',
             );
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $uuids = array();
+        $uuids = [];
 
         $count = filter_var(
             $input->getOption('count'),
             FILTER_VALIDATE_INT,
-            array(
+            [
                 'default' => 1,
                 'min_range' => 1,
-            )
+            ],
         );
 
-        if (((bool) $input->getOption('guid')) == true) {
+        if ((bool) $input->getOption('guid') === true) {
             $features = new FeatureSet(true);
 
             Uuid::setFactory(new UuidFactory($features));
         }
 
-        if (((bool) $input->getOption('comb')) === true) {
+        if ((bool) $input->getOption('comb') === true) {
             Uuid::getFactory()->setRandomGenerator(
                 new CombGenerator(
                     Uuid::getFactory()->getRandomGenerator(),
-                    Uuid::getFactory()->getNumberConverter()
-                )
+                    Uuid::getFactory()->getNumberConverter(),
+                ),
             );
         }
 
         for ($i = 0; $i < $count; $i++) {
             $uuids[] = $this->createUuid(
-                $input->getArgument('version'),
-                $input->getArgument('namespace'),
-                $input->getArgument('name') ?: ''
+                (int) $input->getArgument('version'),
+                (string) $input->getArgument('namespace'),
+                (string) $input->getArgument('name') ?: '',
             );
         }
 
@@ -133,58 +129,44 @@ class GenerateCommand extends Command
     /**
      * Creates the requested UUID
      *
-     * @param int $version
-     * @param string $namespace
-     * @param string $name
-     * @return Uuid
+     * @throws Exception
      */
-    protected function createUuid($version, $namespace = null, $name = null)
+    protected function createUuid(int $version, ?string $namespace = null, ?string $name = null): UuidInterface
     {
-        switch ((int) $version) {
+        switch ($version) {
             case 1:
-                $uuid = Uuid::uuid1();
-                break;
+                return Uuid::uuid1();
             case 4:
-                $uuid = Uuid::uuid4();
-                break;
+                return Uuid::uuid4();
             case 3:
             case 5:
                 $ns = $this->validateNamespace($namespace);
-                if ($version == 3) {
-                    $uuid = Uuid::uuid3($ns, $name);
+                if ($version === 3) {
+                    return Uuid::uuid3($ns, $name);
                 } else {
-                    $uuid = Uuid::uuid5($ns, $name);
+                    return Uuid::uuid5($ns, $name);
                 }
-                break;
             default:
                 throw new Exception('Invalid UUID version. Supported are version "1", "3", "4", and "5".');
         }
-
-        return $uuid;
     }
 
     /**
      * Validates the namespace argument
      *
-     * @param string $namespace
-     * @return string The namespace, if valid
      * @throws Exception
      */
-    protected function validateNamespace($namespace)
+    protected function validateNamespace(string $namespace): string
     {
         switch ($namespace) {
             case 'ns:DNS':
                 return Uuid::NAMESPACE_DNS;
-                break;
             case 'ns:URL':
                 return Uuid::NAMESPACE_URL;
-                break;
             case 'ns:OID':
                 return Uuid::NAMESPACE_OID;
-                break;
             case 'ns:X500':
                 return Uuid::NAMESPACE_X500;
-                break;
         }
 
         if (Uuid::isValid($namespace)) {
@@ -195,7 +177,7 @@ class GenerateCommand extends Command
             'Invalid namespace. '
             . 'May be either a UUID in string representation or an identifier '
             . 'for internally pre-defined namespace UUIDs (currently known '
-            . 'are "ns:DNS", "ns:URL", "ns:OID", and "ns:X500").'
+            . 'are "ns:DNS", "ns:URL", "ns:OID", and "ns:X500").',
         );
     }
 }

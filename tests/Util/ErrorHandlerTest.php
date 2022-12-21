@@ -1,20 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ramsey\Uuid\Console\Util;
 
+use ErrorException;
 use Ramsey\Uuid\Console\TestCase;
+use Throwable;
+
+use function error_reporting;
+use function set_error_handler;
+
+use const E_ALL;
 
 class ErrorHandlerTest extends TestCase
 {
-    /**
-     * @covers Ramsey\Uuid\Console\Util\ErrorHandler::register
-     */
-    public function testRegister()
+    public function testRegister(): void
     {
-        $expected = array (
-            'Ramsey\\Uuid\Console\\Util\\ErrorHandler',
-            'handle',
-        );
+        $expected = [ErrorHandler::class, 'handle'];
 
         $originalHandler = set_error_handler(function () {
         });
@@ -29,29 +32,25 @@ class ErrorHandlerTest extends TestCase
         $this->assertEquals($expected, $testHandler);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Util\ErrorHandler::handle
-     */
-    public function testHandle()
+    public function testHandle(): void
     {
-        if (!method_exists($this, 'expectException')) {
-            $this->markTestSkipped('This version of PHPUnit does not have expectException()');
-        }
-
-        $this->expectException('ErrorException');
+        $this->expectException(ErrorException::class);
         $this->expectExceptionMessage('Test exception');
 
         error_reporting(E_ALL);
         ErrorHandler::handle(1, 'Test exception', __FILE__, __LINE__);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Util\ErrorHandler::handle
-     */
     public function testHandleNoException()
     {
         error_reporting(0);
 
-        $this->assertEmpty(ErrorHandler::handle(1, 'Test exception', __FILE__, __LINE__));
+        try {
+            ErrorHandler::handle(1, 'Test exception', __FILE__, __LINE__);
+        } catch (Throwable $exception) {
+            $this->fail('Caught an unexpected exception');
+        }
+
+        $this->assertTrue(true);
     }
 }

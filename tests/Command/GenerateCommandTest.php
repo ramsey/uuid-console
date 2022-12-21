@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ramsey\Uuid\Console\Command;
 
+use Ramsey\Uuid\Console\Exception;
 use Ramsey\Uuid\Console\TestCase;
 use Ramsey\Uuid\Console\Util\TestOutput;
 use Ramsey\Uuid\Uuid;
+use ReflectionMethod;
 use Symfony\Component\Console\Input\StringInput;
+
+use function method_exists;
 
 class GenerateCommandTest extends TestCase
 {
-    const FOO_NS = 'bbd8a651-6f00-11e3-8ad8-28cfe91e4895';
+    public const FOO_NS = 'bbd8a651-6f00-11e3-8ad8-28cfe91e4895';
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::configure
-     */
     public function testConfigure()
     {
         $generate = new GenerateCommand();
@@ -22,11 +25,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('Generate a UUID', $generate->getDescription());
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     */
-    public function testExecuteForUuidDefault()
+    public function testExecuteForUuidDefault(): void
     {
         $generate = new GenerateCommand();
 
@@ -35,7 +34,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -45,24 +44,17 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals(1, Uuid::fromString($output->messages[0])->getVersion());
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     */
-    public function testExecuteForUuidDefaultWithCount()
+    public function testExecuteForUuidDefaultWithCount(): void
     {
         $generate = new GenerateCommand();
 
-        //
         // Test using the "-c" option
-        //
-
         $input1 = new StringInput('-c 9');
         $input1->bind($generate->getDefinition());
 
         $output1 = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input1, $output1);
@@ -74,16 +66,13 @@ class GenerateCommandTest extends TestCase
             $this->assertEquals(1, Uuid::fromString($uuid)->getVersion());
         }
 
-        //
         // Test using the "--count" option
-        //
-
         $input2 = new StringInput('--count=12');
         $input2->bind($generate->getDefinition());
 
         $output2 = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input2, $output2);
@@ -96,11 +85,7 @@ class GenerateCommandTest extends TestCase
         }
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     */
-    public function testExecuteForUuidSpecifyVersion1()
+    public function testExecuteForUuidSpecifyVersion1(): void
     {
         $generate = new GenerateCommand();
 
@@ -109,7 +94,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -119,24 +104,17 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals(1, Uuid::fromString($output->messages[0])->getVersion());
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     */
-    public function testExecuteForUuidSpecifyVersion1WithCount()
+    public function testExecuteForUuidSpecifyVersion1WithCount(): void
     {
         $generate = new GenerateCommand();
 
-        //
         // Test using the "-c" option
-        //
-
         $input1 = new StringInput('1 -c 3');
         $input1->bind($generate->getDefinition());
 
         $output1 = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input1, $output1);
@@ -148,16 +126,13 @@ class GenerateCommandTest extends TestCase
             $this->assertEquals(1, Uuid::fromString($uuid)->getVersion());
         }
 
-        //
         // Test using the "--count" option
-        //
-
         $input2 = new StringInput('1 --count=8');
         $input2->bind($generate->getDefinition());
 
         $output2 = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input2, $output2);
@@ -170,11 +145,7 @@ class GenerateCommandTest extends TestCase
         }
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     */
-    public function testExecuteForUuidSpecifyVersion4()
+    public function testExecuteForUuidSpecifyVersion4(): void
     {
         $generate = new GenerateCommand();
 
@@ -183,7 +154,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -193,24 +164,17 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals(4, Uuid::fromString($output->messages[0])->getVersion());
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     */
-    public function testExecuteForUuidSpecifyVersion4WithCount()
+    public function testExecuteForUuidSpecifyVersion4WithCount(): void
     {
         $generate = new GenerateCommand();
 
-        //
         // Test using the "-c" option
-        //
-
         $input1 = new StringInput('4 -c 3');
         $input1->bind($generate->getDefinition());
 
         $output1 = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input1, $output1);
@@ -222,16 +186,13 @@ class GenerateCommandTest extends TestCase
             $this->assertEquals(4, Uuid::fromString($uuid)->getVersion());
         }
 
-        //
         // Test using the "--count" option
-        //
-
         $input2 = new StringInput('4 --count=8');
         $input2->bind($generate->getDefinition());
 
         $output2 = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input2, $output2);
@@ -244,12 +205,7 @@ class GenerateCommandTest extends TestCase
         }
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion3WithDnsNs()
+    public function testExecuteForUuidSpecifyVersion3WithDnsNs(): void
     {
         $generate = new GenerateCommand();
 
@@ -258,7 +214,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -269,12 +225,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('6fa459ea-ee8a-3ca4-894e-db77e160355e', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion3WithUrlNs()
+    public function testExecuteForUuidSpecifyVersion3WithUrlNs(): void
     {
         $generate = new GenerateCommand();
 
@@ -283,7 +234,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -294,12 +245,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('9fe8e8c4-aaa8-32a9-a55c-4535a88b748d', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion3WithOidNs()
+    public function testExecuteForUuidSpecifyVersion3WithOidNs(): void
     {
         $generate = new GenerateCommand();
 
@@ -308,7 +254,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -319,12 +265,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('dd1a1cef-13d5-368a-ad82-eca71acd4cd1', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion3WithX500Ns()
+    public function testExecuteForUuidSpecifyVersion3WithX500Ns(): void
     {
         $generate = new GenerateCommand();
 
@@ -333,7 +274,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -344,12 +285,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('658d3002-db6b-3040-a1d1-8ddd7d189a4d', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion3WithOtherNs()
+    public function testExecuteForUuidSpecifyVersion3WithOtherNs(): void
     {
         $generate = new GenerateCommand();
 
@@ -358,7 +294,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -369,12 +305,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('0707b2c0-1f0f-3b2b-9a90-371396a90a86', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion3WithInvalidNs()
+    public function testExecuteForUuidSpecifyVersion3WithInvalidNs(): void
     {
         if (!method_exists($this, 'expectException')) {
             $this->markTestSkipped('This version of PHPUnit does not have expectException()');
@@ -387,21 +318,16 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
-        $this->expectException('Ramsey\\Uuid\\Console\\Exception');
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage('May be either a UUID in string representation or an identifier');
 
         $execute->invoke($generate, $input, $output);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion3WithCount()
+    public function testExecuteForUuidSpecifyVersion3WithCount(): void
     {
         $generate = new GenerateCommand();
 
@@ -410,7 +336,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -424,12 +350,7 @@ class GenerateCommandTest extends TestCase
         }
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion3WithoutName()
+    public function testExecuteForUuidSpecifyVersion3WithoutName(): void
     {
         $generate = new GenerateCommand();
 
@@ -438,7 +359,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -452,12 +373,7 @@ class GenerateCommandTest extends TestCase
         }
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion5WithDnsNs()
+    public function testExecuteForUuidSpecifyVersion5WithDnsNs(): void
     {
         $generate = new GenerateCommand();
 
@@ -466,7 +382,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -477,12 +393,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('886313e1-3b8a-5372-9b90-0c9aee199e5d', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion5WithUrlNs()
+    public function testExecuteForUuidSpecifyVersion5WithUrlNs(): void
     {
         $generate = new GenerateCommand();
 
@@ -491,7 +402,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -502,12 +413,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('4c565f0d-3f5a-5890-b41b-20cf47701c5e', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion5WithOidNs()
+    public function testExecuteForUuidSpecifyVersion5WithOidNs(): void
     {
         $generate = new GenerateCommand();
 
@@ -516,7 +422,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -527,12 +433,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('1447fa61-5277-5fef-a9b3-fbc6e44f4af3', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion5WithX500Ns()
+    public function testExecuteForUuidSpecifyVersion5WithX500Ns(): void
     {
         $generate = new GenerateCommand();
 
@@ -541,7 +442,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -552,12 +453,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('cc957dd1-a972-5349-98cd-874190002798', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion5WithOtherNs()
+    public function testExecuteForUuidSpecifyVersion5WithOtherNs(): void
     {
         $generate = new GenerateCommand();
 
@@ -566,7 +462,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -577,12 +473,7 @@ class GenerateCommandTest extends TestCase
         $this->assertEquals('385c280b-1d07-5d6b-932b-ca7a11d2e7e5', $output->messages[0]);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion5WithInvalidNs()
+    public function testExecuteForUuidSpecifyVersion5WithInvalidNs(): void
     {
         if (!method_exists($this, 'expectException')) {
             $this->markTestSkipped('This version of PHPUnit does not have expectException()');
@@ -595,21 +486,16 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
-        $this->expectException('Ramsey\\Uuid\\Console\\Exception');
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage('May be either a UUID in string representation or an identifier');
 
         $execute->invoke($generate, $input, $output);
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion5WithCount()
+    public function testExecuteForUuidSpecifyVersion5WithCount(): void
     {
         $generate = new GenerateCommand();
 
@@ -618,7 +504,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -632,12 +518,7 @@ class GenerateCommandTest extends TestCase
         }
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::validateNamespace
-     */
-    public function testExecuteForUuidSpecifyVersion5WithoutName()
+    public function testExecuteForUuidSpecifyVersion5WithoutName(): void
     {
         $generate = new GenerateCommand();
 
@@ -646,7 +527,7 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
         $execute->invoke($generate, $input, $output);
@@ -660,11 +541,7 @@ class GenerateCommandTest extends TestCase
         }
     }
 
-    /**
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::execute
-     * @covers Ramsey\Uuid\Console\Command\GenerateCommand::createUuid
-     */
-    public function testExecuteForUuidSpecifyInvalidVersion()
+    public function testExecuteForUuidSpecifyInvalidVersion(): void
     {
         if (!method_exists($this, 'expectException')) {
             $this->markTestSkipped('This version of PHPUnit does not have expectException()');
@@ -677,10 +554,10 @@ class GenerateCommandTest extends TestCase
 
         $output = new TestOutput();
 
-        $execute = new \ReflectionMethod('Ramsey\\Uuid\\Console\\Command\\GenerateCommand', 'execute');
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
         $execute->setAccessible(true);
 
-        $this->expectException('Ramsey\\Uuid\\Console\\Exception');
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage('Invalid UUID version. Supported are version "1", "3", "4", and "5".');
 
         $execute->invoke($generate, $input, $output);

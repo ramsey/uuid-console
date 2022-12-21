@@ -9,26 +9,20 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Ramsey\Uuid\Console\Util;
 
 use Symfony\Component\Console\Output\Output;
 
-/**
- * @author Jean-François Simon <contact@jfsimon.fr>
- */
 class BufferedOutput extends Output
 {
-    /**
-     * @var string
-     */
-    private $buffer = '';
+    private string $buffer = '';
 
     /**
      * Empties buffer and returns its content.
-     *
-     * @return string
      */
-    public function fetch()
+    public function fetch(): string
     {
         $content = $this->buffer;
         $this->buffer = '';
@@ -36,10 +30,7 @@ class BufferedOutput extends Output
         return $content;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function doWrite($message, $newline)
+    protected function doWrite(string $message, bool $newline): void
     {
         $this->buffer .= $message;
 

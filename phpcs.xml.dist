@@ -8,8 +8,8 @@
     <file>./src</file>
     <file>./tests</file>
 
-    <rule ref="PSR12">
-        <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
+    <rule ref="Ramsey">
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
     </rule>
 
 </ruleset>

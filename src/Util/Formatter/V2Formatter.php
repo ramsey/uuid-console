@@ -8,20 +8,22 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://packagist.org/packages/ramsey/uuid-console Packagist
- * @link https://github.com/ramsey/uuid-console GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Uuid\Console\Util\Formatter;
 
-use Ramsey\Uuid\Console\Util\UuidFormatter;
-use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Console\Util\UuidContentFormatterInterface;
+use Ramsey\Uuid\UuidInterface;
 
 class V2Formatter implements UuidContentFormatterInterface
 {
-    public function getContent(UuidInterface $uuid)
+    /**
+     * @inheritDoc
+     */
+    public function getContent(UuidInterface $uuid): array
     {
-        return array();
+        return [];
     }
 }

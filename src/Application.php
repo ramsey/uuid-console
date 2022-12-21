@@ -8,14 +8,12 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://packagist.org/packages/ramsey/uuid-console Packagist
- * @link https://github.com/ramsey/uuid-console GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Uuid\Console;
 
-use Ramsey\Uuid\Console\Util;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Application as BaseApplication;
 
 /**

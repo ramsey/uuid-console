@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ramsey\Uuid\Console\Util;
 
 use Symfony\Component\Console\Output\Output;
 
 class TestOutput extends Output
 {
-    public $messages = array();
+    /**
+     * @var string[]
+     */
+    public array $messages = [];
 
-    protected function doWrite($message, $newline)
+    protected function doWrite(string $message, bool $newline): void
     {
         $this->messages[] = $message;
     }

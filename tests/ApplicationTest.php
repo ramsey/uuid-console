@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ramsey\Uuid\Console;
+
+use function restore_error_handler;
 
 class ApplicationTest extends TestCase
 {
-    /**
-     * @covers Ramsey\Uuid\Console\Application::__construct
-     */
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $app = new Application();
 
         // Reset the error handler, since the constructor sets it
         restore_error_handler();
 
-        $this->assertInstanceOf('Ramsey\\Uuid\\Console\\Application', $app);
+        $this->assertInstanceOf(Application::class, $app);
         $this->assertEquals('ramsey/uuid-console', $app->getName());
     }
 }

@@ -8,32 +8,31 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://packagist.org/packages/ramsey/uuid-console Packagist
- * @link https://github.com/ramsey/uuid-console GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Uuid\Console\Command;
 
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
+use Ramsey\Uuid\Console\Exception;
+use Ramsey\Uuid\Console\Util\UuidFormatter;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Ramsey\Uuid\Console\Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\Console\Util\UuidFormatter;
-use Symfony\Component\Console\Helper\Table;
+
+use function class_exists;
 
 /**
  * Provides the console command to decode UUIDs and dump information about them
  */
 class DecodeCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -43,23 +42,17 @@ class DecodeCommand extends Command
             ->addArgument(
                 'uuid',
                 InputArgument::REQUIRED,
-                'The UUID to decode.'
+                'The UUID to decode.',
             )
             ->addOption(
                 'ordered-time',
                 'o',
                 InputOption::VALUE_NONE,
-                'Puts back parts into order.'
+                'Puts back parts into order.',
             );
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!Uuid::isValid($input->getArgument('uuid'))) {
             throw new Exception('Invalid UUID (' . $input->getArgument('uuid') . ')');
@@ -78,25 +71,17 @@ class DecodeCommand extends Command
         }
 
         $table = $this->createTable($output);
-        $this->setTableLayout($table);
+        $table->setStyle('borderless');
 
         (new UuidFormatter())->write($table, $uuid);
 
-        $table->render($output);
+        $table->render();
 
         return 0;
     }
 
-    protected function createTable(OutputInterface $output)
+    protected function createTable(OutputInterface $output): Table
     {
         return new Table($output);
-    }
-
-    /**
-     * @param object $table
-     */
-    protected function setTableLayout($table)
-    {
-        $table->setStyle('borderless');
     }
 }

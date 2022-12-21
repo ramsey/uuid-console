@@ -19,8 +19,8 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
-        "ramsey/uuid": "^3 || ^4",
-        "symfony/console": "^2.7 || ^3 || ^4 || ^5"
+        "ramsey/uuid": "^3.9.7 || ^4",
+        "symfony/console": "^5.0 || ^6.0"
     },
     "require-dev": {
         "php-parallel-lint/php-parallel-lint": "^1",

@@ -117,7 +117,7 @@ class UuidFormatter
 
     public function getFormattedVersion(UuidInterface $uuid): string
     {
-        return self::$versionMap[$uuid->getVersion() ?? -1];
+        return self::$versionMap[$this->getVersion($uuid)];
     }
 
     public function getFormattedVariant(UuidInterface $uuid): string
@@ -132,14 +132,21 @@ class UuidFormatter
      */
     public function getContent(UuidInterface $uuid): array
     {
-        $version = $uuid->getVersion() ?? -1;
-
-        $formatter = self::$formatters[$version] ?? null;
+        $formatter = self::$formatters[$this->getVersion($uuid)] ?? null;
 
         if ($formatter === null) {
             throw new Exception('Unable to format UUID of unknown version');
         }
 
         return $formatter->getContent($uuid);
+    }
+
+    /**
+     * Bypass Uuid::getVersion(), since the version of ramsey/uuid might be old
+     * and not aware of versions 6, 7, and 8.
+     */
+    private function getVersion(UuidInterface $uuid): int
+    {
+        return (int) ($uuid->toString()[14] ?? -1);
     }
 }

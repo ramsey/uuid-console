@@ -11,13 +11,11 @@ use Ramsey\Uuid\Uuid;
 use ReflectionMethod;
 use Symfony\Component\Console\Input\StringInput;
 
-use function method_exists;
-
 class GenerateCommandTest extends TestCase
 {
     public const FOO_NS = 'bbd8a651-6f00-11e3-8ad8-28cfe91e4895';
 
-    public function testConfigure()
+    public function testConfigure(): void
     {
         $generate = new GenerateCommand();
 
@@ -307,10 +305,6 @@ class GenerateCommandTest extends TestCase
 
     public function testExecuteForUuidSpecifyVersion3WithInvalidNs(): void
     {
-        if (!method_exists($this, 'expectException')) {
-            $this->markTestSkipped('This version of PHPUnit does not have expectException()');
-        }
-
         $generate = new GenerateCommand();
 
         $input = new StringInput('3 foo foobar');
@@ -475,10 +469,6 @@ class GenerateCommandTest extends TestCase
 
     public function testExecuteForUuidSpecifyVersion5WithInvalidNs(): void
     {
-        if (!method_exists($this, 'expectException')) {
-            $this->markTestSkipped('This version of PHPUnit does not have expectException()');
-        }
-
         $generate = new GenerateCommand();
 
         $input = new StringInput('5 foo foobar');
@@ -543,10 +533,6 @@ class GenerateCommandTest extends TestCase
 
     public function testExecuteForUuidSpecifyInvalidVersion(): void
     {
-        if (!method_exists($this, 'expectException')) {
-            $this->markTestSkipped('This version of PHPUnit does not have expectException()');
-        }
-
         $generate = new GenerateCommand();
 
         $input = new StringInput('6');

@@ -26,6 +26,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use function assert;
 use function filter_var;
 
 use const FILTER_VALIDATE_INT;
@@ -103,20 +104,25 @@ class GenerateCommand extends Command
         }
 
         if ((bool) $input->getOption('comb') === true) {
-            Uuid::getFactory()->setRandomGenerator(
-                new CombGenerator(
-                    Uuid::getFactory()->getRandomGenerator(),
-                    Uuid::getFactory()->getNumberConverter(),
-                ),
+            $factory = Uuid::getFactory();
+            assert($factory instanceof UuidFactory);
+
+            $factory->setRandomGenerator(
+                new CombGenerator($factory->getRandomGenerator(), $factory->getNumberConverter()),
             );
         }
 
+        /** @var scalar $inputVersion */
+        $inputVersion = $input->getArgument('version');
+
+        /** @var scalar $inputNamespace */
+        $inputNamespace = $input->getArgument('namespace');
+
+        /** @var scalar $inputName */
+        $inputName = $input->getArgument('name');
+
         for ($i = 0; $i < $count; $i++) {
-            $uuids[] = $this->createUuid(
-                (int) $input->getArgument('version'),
-                (string) $input->getArgument('namespace'),
-                (string) $input->getArgument('name') ?: '',
-            );
+            $uuids[] = $this->createUuid((int) $inputVersion, (string) $inputNamespace, (string) $inputName);
         }
 
         foreach ($uuids as $uuid) {
@@ -140,11 +146,11 @@ class GenerateCommand extends Command
                 return Uuid::uuid4();
             case 3:
             case 5:
-                $ns = $this->validateNamespace($namespace);
+                $ns = $this->validateNamespace((string) $namespace);
                 if ($version === 3) {
-                    return Uuid::uuid3($ns, $name);
+                    return Uuid::uuid3($ns, (string) $name);
                 } else {
-                    return Uuid::uuid5($ns, $name);
+                    return Uuid::uuid5($ns, (string) $name);
                 }
             default:
                 throw new Exception('Invalid UUID version. Supported are version "1", "3", "4", and "5".');

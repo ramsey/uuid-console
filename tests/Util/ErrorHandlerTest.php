@@ -19,12 +19,10 @@ class ErrorHandlerTest extends TestCase
     {
         $expected = [ErrorHandler::class, 'handle'];
 
-        $originalHandler = set_error_handler(function () {
-        });
+        $originalHandler = set_error_handler(fn (int $i, string $x, string $z, int $n): bool => true);
 
         ErrorHandler::register();
-        $testHandler = set_error_handler(function () {
-        });
+        $testHandler = set_error_handler(fn (int $i, string $x, string $z, int $n): bool => true);
 
         // Set handler back to original
         set_error_handler($originalHandler);
@@ -41,7 +39,7 @@ class ErrorHandlerTest extends TestCase
         ErrorHandler::handle(1, 'Test exception', __FILE__, __LINE__);
     }
 
-    public function testHandleNoException()
+    public function testHandleNoException(): void
     {
         error_reporting(0);
 

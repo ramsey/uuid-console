@@ -34,11 +34,11 @@ class ErrorHandler
      *
      * @throws ErrorException
      */
-    public static function handle(int $level, string $message, string $file, int $line): void
+    public static function handle(int $level, string $message, string $file, int $line): ?bool
     {
         // respect error_reporting being disabled
         if (!error_reporting()) {
-            return;
+            return null;
         }
 
         throw new ErrorException($message, 0, $level, $file, $line);
@@ -49,6 +49,9 @@ class ErrorHandler
      */
     public static function register(): void
     {
-        set_error_handler([self::class, 'handle']);
+        /** @psalm-var callable(int, string, string, int):bool|null $callback */
+        $callback = [self::class, 'handle'];
+
+        set_error_handler($callback);
     }
 }

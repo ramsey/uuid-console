@@ -18,6 +18,7 @@ use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use Ramsey\Uuid\Console\Exception;
 use Ramsey\Uuid\Console\Util\UuidFormatter;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -25,7 +26,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use function class_exists;
+use function assert;
 
 /**
  * Provides the console command to decode UUIDs and dump information about them
@@ -54,18 +55,19 @@ class DecodeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if (!Uuid::isValid($input->getArgument('uuid'))) {
-            throw new Exception('Invalid UUID (' . $input->getArgument('uuid') . ')');
+        /** @var scalar $inputUuid */
+        $inputUuid = $input->getArgument('uuid');
+
+        if (!Uuid::isValid((string) $inputUuid)) {
+            throw new Exception('Invalid UUID (' . $inputUuid . ')');
         }
 
-        $uuid = Uuid::fromString($input->getArgument('uuid'));
+        $uuid = Uuid::fromString((string) $inputUuid);
 
         if ($input->getOption('ordered-time')) {
-            if (!class_exists('Ramsey\Uuid\Codec\OrderedTimeCodec')) {
-                throw new Exception('To use ordered-time option requires ramsey/uuid=^3.5');
-            }
-
             $factory = clone Uuid::getFactory();
+            assert($factory instanceof UuidFactory);
+
             $codec = new OrderedTimeCodec($factory->getUuidBuilder());
             $uuid = $codec->decodeBytes($uuid->getBytes());
         }

@@ -18,6 +18,7 @@ use Ramsey\Uuid\Console\Util\UuidContentFormatterInterface;
 use Ramsey\Uuid\UuidInterface;
 
 use function chunk_split;
+use function hexdec;
 use function substr;
 
 class V1Formatter implements UuidContentFormatterInterface
@@ -29,7 +30,7 @@ class V1Formatter implements UuidContentFormatterInterface
     {
         return [
             ['', 'content:', 'time:  ' . $uuid->getDateTime()->format('c')],
-            ['', '', 'clock: ' . $uuid->getClockSequence() . ' (usually random)'],
+            ['', '', 'clock: ' . hexdec($uuid->getClockSequenceHex()) . ' (usually random)'],
             ['', '', 'node:  ' . substr(chunk_split($uuid->getNodeHex(), 2, ':'), 0, -1)],
         ];
     }

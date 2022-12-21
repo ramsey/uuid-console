@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.4.0@62db5d4f6a7ae0a20f7cc5a4952d730272fc0863">
+  <file src="src/Util/Formatter/V1Formatter.php">
+    <DeprecatedMethod occurrences="3">
+      <code>getClockSequenceHex</code>
+      <code>getDateTime</code>
+      <code>getNodeHex</code>
+    </DeprecatedMethod>
+  </file>
+  <file src="src/Util/UuidFormatter.php">
+    <DeprecatedMethod occurrences="5">
+      <code>getVariant</code>
+      <code>getVariant</code>
+      <code>getVersion</code>
+      <code>getVersion</code>
+      <code>getVersion</code>
+    </DeprecatedMethod>
+  </file>
+</files>

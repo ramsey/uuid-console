@@ -11,9 +11,7 @@ use Ramsey\Uuid\Console\Util\BufferedOutput;
 use ReflectionMethod;
 use Symfony\Component\Console\Input\StringInput;
 
-use function class_exists;
 use function file_get_contents;
-use function method_exists;
 
 class DecodeCommandTest extends TestCase
 {
@@ -27,10 +25,6 @@ class DecodeCommandTest extends TestCase
 
     public function testExecuteForInvalidUuid(): void
     {
-        if (!method_exists($this, 'expectException')) {
-            $this->markTestSkipped('This version of PHPUnit does not have expectException()');
-        }
-
         $decode = new DecodeCommand();
         $decode->setApplication(new Application());
 
@@ -70,11 +64,7 @@ class DecodeCommandTest extends TestCase
 
     public function testExecuteForVersion1Uuid(): void
     {
-        if (class_exists('Ramsey\Uuid\Codec\OrderedTimeCodec')) {
-            $expected = file_get_contents('tests/console-mocks/testExecuteForVersion1UuidWithOrd.txt');
-        } else {
-            $expected = file_get_contents('tests/console-mocks/testExecuteForVersion1Uuid.txt');
-        }
+        $expected = file_get_contents('tests/console-mocks/testExecuteForVersion1UuidWithOrd.txt');
 
         $decode = new DecodeCommand();
         $decode->setApplication(new Application());
@@ -174,10 +164,6 @@ class DecodeCommandTest extends TestCase
 
     public function testExecuteForOrderedTimeUuid(): void
     {
-        if (!class_exists('Ramsey\Uuid\Codec\OrderedTimeCodec')) {
-            $this->markTestSkipped('Ramsey\Uuid\Codec\OrderedTimeCodec does not exist');
-        }
-
         $expected = file_get_contents('tests/console-mocks/testExecuteForOrderedTimeUuid.txt');
 
         $decode = new DecodeCommand();

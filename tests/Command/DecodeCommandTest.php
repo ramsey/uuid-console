@@ -8,9 +8,12 @@ use Ramsey\Uuid\Console\Application;
 use Ramsey\Uuid\Console\Exception;
 use Ramsey\Uuid\Console\TestCase;
 use Ramsey\Uuid\Console\Util\BufferedOutput;
+use Ramsey\Uuid\Uuid;
 use ReflectionMethod;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Input\StringInput;
+
+use function method_exists;
 
 class DecodeCommandTest extends TestCase
 {
@@ -149,6 +152,54 @@ class DecodeCommandTest extends TestCase
         $decode->setApplication(new Application());
 
         $input = new StringInput('886313e1-3b8a-5372-9b90-0c9aee199e5d');
+        $input->bind($decode->getDefinition());
+
+        $output = new BufferedOutput();
+
+        $execute = new ReflectionMethod(DecodeCommand::class, 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($decode, $input, $output);
+
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
+    }
+
+    public function testExecuteForVersion6Uuid(): void
+    {
+        if (!method_exists(Uuid::class, 'uuid6')) {
+            $this->markTestSkipped('Skipping for version of ramsey/uuid that does not support uuid6');
+        }
+
+        $decode = new DecodeCommand();
+        $decode->setApplication(new Application());
+
+        $input = new StringInput('1e37fc42-ddbf-660e-a5ac-080027cd5e4d');
+        $input->bind($decode->getDefinition());
+
+        $output = new BufferedOutput();
+
+        $execute = new ReflectionMethod(DecodeCommand::class, 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($decode, $input, $output);
+
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
+    }
+
+    public function testExecuteForVersion6UuidWhenUuid6NotSupported(): void
+    {
+        if (method_exists(Uuid::class, 'uuid6')) {
+            $this->markTestSkipped('Skipping for version of ramsey/uuid that supports uuid6');
+        }
+
+        $decode = new DecodeCommand();
+        $decode->setApplication(new Application());
+
+        $input = new StringInput('1e37fc42-ddbf-660e-a5ac-080027cd5e4d');
         $input->bind($decode->getDefinition());
 
         $output = new BufferedOutput();

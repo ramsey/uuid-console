@@ -1,0 +1,9 @@
+ ========= ========== ===================================================== 
+  encode:   STR:       1e37fc42-ddbf-660e-a5ac-080027cd5e4d                 
+            INT:       40167532665673311822713754593046388301               
+  decode:   variant:   RFC 4122                                             
+            version:   6 (reordered time)                                   
+            content:   time:  Not supported in this version of ramsey/uuid  
+                       clock: 9644 (usually random)                         
+                       node:  08:00:27:cd:5e:4d                             
+ ========= ========== ===================================================== 

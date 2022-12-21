@@ -7,6 +7,13 @@
       <code>getNodeHex</code>
     </DeprecatedMethod>
   </file>
+  <file src="src/Util/Formatter/V6Formatter.php">
+    <DeprecatedMethod occurrences="3">
+      <code>getClockSequenceHex</code>
+      <code>getDateTime</code>
+      <code>getNodeHex</code>
+    </DeprecatedMethod>
+  </file>
   <file src="src/Util/UuidFormatter.php">
     <DeprecatedMethod occurrences="5">
       <code>getVariant</code>

@@ -6,9 +6,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @link https://packagist.org/packages/ramsey/uuid-console Packagist
- * @link https://github.com/ramsey/uuid-console GitHub
- *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
  */

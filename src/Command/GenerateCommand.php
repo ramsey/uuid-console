@@ -15,10 +15,7 @@ declare(strict_types=1);
 namespace Ramsey\Uuid\Console\Command;
 
 use Ramsey\Uuid\Console\Exception;
-use Ramsey\Uuid\FeatureSet;
-use Ramsey\Uuid\Generator\CombGenerator;
 use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,7 +23,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use function assert;
 use function filter_var;
 use function method_exists;
 
@@ -70,18 +66,6 @@ class GenerateCommand extends Command
                 InputOption::VALUE_REQUIRED,
                 'Generate count UUIDs instead of just a single one.',
                 1,
-            )
-            ->addOption(
-                'comb',
-                null,
-                InputOption::VALUE_NONE,
-                'For version 4 UUIDs, uses the COMB strategy to generate the random data.',
-            )
-            ->addOption(
-                'guid',
-                'g',
-                InputOption::VALUE_NONE,
-                'Returns a GUID formatted UUID.',
             );
     }
 
@@ -97,21 +81,6 @@ class GenerateCommand extends Command
                 'min_range' => 1,
             ],
         );
-
-        if ((bool) $input->getOption('guid') === true) {
-            $features = new FeatureSet(true);
-
-            Uuid::setFactory(new UuidFactory($features));
-        }
-
-        if ((bool) $input->getOption('comb') === true) {
-            $factory = Uuid::getFactory();
-            assert($factory instanceof UuidFactory);
-
-            $factory->setRandomGenerator(
-                new CombGenerator($factory->getRandomGenerator(), $factory->getNumberConverter()),
-            );
-        }
 
         /** @var scalar $inputVersion */
         $inputVersion = $input->getArgument('version');

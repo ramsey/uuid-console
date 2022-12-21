@@ -124,7 +124,12 @@ jobs:
           dependency-versions: "${{ matrix.composer-deps }}"
 
       - name: "Run unit tests (PHPUnit)"
+        if: "${{ matrix.composer-deps == 'highest' }}"
         run: "composer dev:test:coverage:ci"
+
+      - name: "Run unit tests, with deprecation notices turned off (PHPUnit)"
+        if: "${{ matrix.composer-deps == 'lowest' }}"
+        run: "composer dev:test:coverage:ci -- -d 'error_reporting=E_ALL & ~E_DEPRECATED'"
 
       - name: "Publish coverage report to Codecov"
         uses: "codecov/codecov-action@v3.1.1"

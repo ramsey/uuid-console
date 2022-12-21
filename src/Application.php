@@ -21,12 +21,14 @@ use Symfony\Component\Console\Application as BaseApplication;
  */
 class Application extends BaseApplication
 {
+    public const VERSION = '2.0';
+
     /**
      * Constructor
      */
     public function __construct()
     {
         Util\ErrorHandler::register();
-        parent::__construct('ramsey/uuid-console', '1.1');
+        parent::__construct('ramsey/uuid-console', self::VERSION);
     }
 }

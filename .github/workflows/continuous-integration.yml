@@ -101,6 +101,11 @@ jobs:
     needs: ["coding-standards", "static-analysis"]
     runs-on: "ubuntu-latest"
 
+    strategy:
+      fail-fast: false
+      matrix:
+        composer-deps: [ "lowest", "highest" ]
+
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v3.2.0"
@@ -115,6 +120,8 @@ jobs:
 
       - name: "Install dependencies (Composer)"
         uses: "ramsey/composer-install@2.2.0"
+        with:
+          dependency-versions: "${{ matrix.composer-deps }}"
 
       - name: "Run unit tests (PHPUnit)"
         run: "composer dev:test:coverage:ci"

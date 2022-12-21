@@ -627,7 +627,7 @@ class GenerateCommandTest extends TestCase
     {
         $generate = new GenerateCommand();
 
-        $input = new StringInput('7');
+        $input = new StringInput('9');
         $input->bind($generate->getDefinition());
 
         $output = new TestOutput();
@@ -636,8 +636,100 @@ class GenerateCommandTest extends TestCase
         $execute->setAccessible(true);
 
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Invalid UUID version. Supported are version "1", "3", "4", "5" and "6".');
+        $this->expectExceptionMessage(
+            'Invalid UUID version. Supported are version "1", "3", "4", "5", "6", and "7".',
+        );
 
         $execute->invoke($generate, $input, $output);
+    }
+
+    public function testExecuteForUuidSpecifyVersion7(): void
+    {
+        if (!method_exists(Uuid::class, 'uuid7')) {
+            $this->markTestSkipped('Skipping for version of ramsey/uuid that does not support uuid7');
+        }
+
+        $generate = new GenerateCommand();
+
+        $input = new StringInput('7');
+        $input->bind($generate->getDefinition());
+
+        $output = new TestOutput();
+
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($generate, $input, $output);
+
+        $this->assertCount(1, $output->messages);
+        $this->assertTrue(Uuid::isValid($output->messages[0]));
+        $this->assertSame(7, Uuid::fromString($output->messages[0])->getVersion());
+    }
+
+    public function testExecuteForUuidSpecifyVersion7WithCount(): void
+    {
+        if (!method_exists(Uuid::class, 'uuid7')) {
+            $this->markTestSkipped('Skipping for version of ramsey/uuid that does not support uuid7');
+        }
+
+        $generate = new GenerateCommand();
+
+        // Test using the "-c" option
+        $input1 = new StringInput('7 -c 3');
+        $input1->bind($generate->getDefinition());
+
+        $output1 = new TestOutput();
+
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($generate, $input1, $output1);
+
+        $this->assertCount(3, $output1->messages);
+
+        foreach ($output1->messages as $uuid) {
+            $this->assertTrue(Uuid::isValid($uuid));
+            $this->assertSame(7, Uuid::fromString($uuid)->getVersion());
+        }
+
+        // Test using the "--count" option
+        $input2 = new StringInput('7 --count=8');
+        $input2->bind($generate->getDefinition());
+
+        $output2 = new TestOutput();
+
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($generate, $input2, $output2);
+
+        $this->assertCount(8, $output2->messages);
+
+        foreach ($output2->messages as $uuid) {
+            $this->assertTrue(Uuid::isValid($uuid));
+            $this->assertSame(7, Uuid::fromString($uuid)->getVersion());
+        }
+    }
+
+    public function testExecuteForUuidSpecifyVersion7OnUnsupportedVersion(): void
+    {
+        if (method_exists(Uuid::class, 'uuid7')) {
+            $this->markTestSkipped('Skipping for version of ramsey/uuid that supports uuid7');
+        }
+
+        $generate = new GenerateCommand();
+
+        $input1 = new StringInput('7');
+        $input1->bind($generate->getDefinition());
+
+        $output1 = new TestOutput();
+
+        $execute = new ReflectionMethod(GenerateCommand::class, 'execute');
+        $execute->setAccessible(true);
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Your version of ramsey/uuid does not support uuid7.');
+
+        $execute->invoke($generate, $input1, $output1);
     }
 }

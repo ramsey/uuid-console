@@ -214,6 +214,54 @@ class DecodeCommandTest extends TestCase
         $this->assertMatchesTextSnapshot($consoleOutput);
     }
 
+    public function testExecuteForVersion7Uuid(): void
+    {
+        if (!method_exists(Uuid::class, 'uuid7')) {
+            $this->markTestSkipped('Skipping for version of ramsey/uuid that does not support uuid7');
+        }
+
+        $decode = new DecodeCommand();
+        $decode->setApplication(new Application());
+
+        $input = new StringInput('01853665-d4ba-7390-83b1-d7dc1f4dfe00');
+        $input->bind($decode->getDefinition());
+
+        $output = new BufferedOutput();
+
+        $execute = new ReflectionMethod(DecodeCommand::class, 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($decode, $input, $output);
+
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
+    }
+
+    public function testExecuteForVersion7UuidWhenUuid7NotSupported(): void
+    {
+        if (method_exists(Uuid::class, 'uuid7')) {
+            $this->markTestSkipped('Skipping for version of ramsey/uuid that supports uuid7');
+        }
+
+        $decode = new DecodeCommand();
+        $decode->setApplication(new Application());
+
+        $input = new StringInput('01853665-d4ba-7390-83b1-d7dc1f4dfe00');
+        $input->bind($decode->getDefinition());
+
+        $output = new BufferedOutput();
+
+        $execute = new ReflectionMethod(DecodeCommand::class, 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($decode, $input, $output);
+
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
+    }
+
     public function testExecuteForOrderedTimeUuid(): void
     {
         $decode = new DecodeCommand();

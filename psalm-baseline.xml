@@ -14,6 +14,11 @@
       <code>getNodeHex</code>
     </DeprecatedMethod>
   </file>
+  <file src="src/Util/Formatter/V7Formatter.php">
+    <DeprecatedMethod occurrences="1">
+      <code>getDateTime</code>
+    </DeprecatedMethod>
+  </file>
   <file src="src/Util/UuidFormatter.php">
     <DeprecatedMethod occurrences="5">
       <code>getVariant</code>

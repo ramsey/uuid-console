@@ -47,7 +47,7 @@ class GenerateCommand extends Command
                 'version',
                 InputArgument::OPTIONAL,
                 'The UUID version to generate. Supported are version "1", "3", '
-                . '"4", "5" and "6".',
+                . '"4", "5", "6", and "7".',
                 1,
             )
             ->addArgument(
@@ -159,8 +159,16 @@ class GenerateCommand extends Command
                 }
 
                 return Uuid::uuid6();
+            case 7:
+                if (!method_exists(Uuid::class, 'uuid7')) {
+                    throw new Exception('Your version of ramsey/uuid does not support uuid7.');
+                }
+
+                return Uuid::uuid7();
             default:
-                throw new Exception('Invalid UUID version. Supported are version "1", "3", "4", "5" and "6".');
+                throw new Exception(
+                    'Invalid UUID version. Supported are version "1", "3", "4", "5", "6", and "7".',
+                );
         }
     }
 

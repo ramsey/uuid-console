@@ -22,6 +22,7 @@ use Ramsey\Uuid\Console\Util\Formatter\V3Formatter;
 use Ramsey\Uuid\Console\Util\Formatter\V4Formatter;
 use Ramsey\Uuid\Console\Util\Formatter\V5Formatter;
 use Ramsey\Uuid\Console\Util\Formatter\V6Formatter;
+use Ramsey\Uuid\Console\Util\Formatter\V7Formatter;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidInterface;
@@ -42,6 +43,7 @@ class UuidFormatter
         4 => '4 (random data based)',
         5 => '5 (name based, SHA-1)',
         6 => '6 (reordered time)',
+        7 => '7 (Unix Epoch time)',
     ];
 
     /**
@@ -71,6 +73,7 @@ class UuidFormatter
                 4 => new V4Formatter(),
                 5 => new V5Formatter(),
                 6 => new V6Formatter(),
+                7 => new V7Formatter(),
             ];
         }
     }

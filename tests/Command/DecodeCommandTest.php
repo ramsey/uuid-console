@@ -9,12 +9,13 @@ use Ramsey\Uuid\Console\Exception;
 use Ramsey\Uuid\Console\TestCase;
 use Ramsey\Uuid\Console\Util\BufferedOutput;
 use ReflectionMethod;
+use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Input\StringInput;
-
-use function file_get_contents;
 
 class DecodeCommandTest extends TestCase
 {
+    use MatchesSnapshots;
+
     public function testConfigure(): void
     {
         $decode = new DecodeCommand();
@@ -47,8 +48,6 @@ class DecodeCommandTest extends TestCase
         $decode = new DecodeCommand();
         $decode->setApplication(new Application());
 
-        $expected = file_get_contents('tests/console-mocks/testExecuteForNonRFC4122Uuid.txt');
-
         $input = new StringInput('ff6f8cb0-c57d-11e1-0b21-0800200c9a66');
         $input->bind($decode->getDefinition());
 
@@ -59,13 +58,13 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
     }
 
     public function testExecuteForVersion1Uuid(): void
     {
-        $expected = file_get_contents('tests/console-mocks/testExecuteForVersion1UuidWithOrd.txt');
-
         $decode = new DecodeCommand();
         $decode->setApplication(new Application());
 
@@ -79,13 +78,13 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
     }
 
     public function testExecuteForVersion2Uuid(): void
     {
-        $expected = file_get_contents('tests/console-mocks/testExecuteForVersion2Uuid.txt');
-
         $decode = new DecodeCommand();
         $decode->setApplication(new Application());
 
@@ -99,13 +98,13 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
     }
 
     public function testExecuteForVersion3Uuid(): void
     {
-        $expected = file_get_contents('tests/console-mocks/testExecuteForVersion3Uuid.txt');
-
         $decode = new DecodeCommand();
         $decode->setApplication(new Application());
 
@@ -119,13 +118,13 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
     }
 
     public function testExecuteForVersion4Uuid(): void
     {
-        $expected = file_get_contents('tests/console-mocks/testExecuteForVersion4Uuid.txt');
-
         $decode = new DecodeCommand();
         $decode->setApplication(new Application());
 
@@ -139,13 +138,13 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
     }
 
     public function testExecuteForVersion5Uuid(): void
     {
-        $expected = file_get_contents('tests/console-mocks/testExecuteForVersion5Uuid.txt');
-
         $decode = new DecodeCommand();
         $decode->setApplication(new Application());
 
@@ -159,13 +158,13 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
     }
 
     public function testExecuteForOrderedTimeUuid(): void
     {
-        $expected = file_get_contents('tests/console-mocks/testExecuteForOrderedTimeUuid.txt');
-
         $decode = new DecodeCommand();
         $decode->setApplication(new Application());
 
@@ -179,6 +178,8 @@ class DecodeCommandTest extends TestCase
 
         $execute->invoke($decode, $input, $output);
 
-        $this->assertEquals($expected, $output->fetch());
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
     }
 }

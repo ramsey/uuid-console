@@ -132,7 +132,6 @@ composer phpcs
 composer phpcbf
 ```
 
-<!--
 ### Static Analysis
 
 This project uses a combination of [PHPStan](https://github.com/phpstan/phpstan)
@@ -148,7 +147,6 @@ following command:
 # Static analysis
 composer dev:analyze
 ```
--->
 
 ### Project Structure
 

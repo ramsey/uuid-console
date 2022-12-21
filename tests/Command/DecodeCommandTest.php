@@ -262,6 +262,26 @@ class DecodeCommandTest extends TestCase
         $this->assertMatchesTextSnapshot($consoleOutput);
     }
 
+    public function testExecuteForVersion8Uuid(): void
+    {
+        $decode = new DecodeCommand();
+        $decode->setApplication(new Application());
+
+        $input = new StringInput('00112233-4455-8677-8899-aabbccddeeff');
+        $input->bind($decode->getDefinition());
+
+        $output = new BufferedOutput();
+
+        $execute = new ReflectionMethod(DecodeCommand::class, 'execute');
+        $execute->setAccessible(true);
+
+        $execute->invoke($decode, $input, $output);
+
+        $consoleOutput = $output->fetch();
+
+        $this->assertMatchesTextSnapshot($consoleOutput);
+    }
+
     public function testExecuteForOrderedTimeUuid(): void
     {
         $decode = new DecodeCommand();

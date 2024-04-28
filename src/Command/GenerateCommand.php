@@ -73,6 +73,7 @@ class GenerateCommand extends Command
     {
         $uuids = [];
 
+        /** @psalm-suppress RedundantFlag */
         $count = filter_var(
             $input->getOption('count'),
             FILTER_VALIDATE_INT,

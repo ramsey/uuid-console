@@ -49,7 +49,7 @@ class ErrorHandler
      */
     public static function register(): void
     {
-        /** @psalm-var callable(int, string, string, int):bool|null $callback */
+        /** @psalm-var callable(int, string, string=, int=, array<array-key, mixed>=):bool|null $callback */
         $callback = [self::class, 'handle'];
 
         set_error_handler($callback);

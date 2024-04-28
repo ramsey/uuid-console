@@ -20,11 +20,9 @@
     </DeprecatedMethod>
   </file>
   <file src="src/Util/UuidFormatter.php">
-    <DeprecatedMethod occurrences="5">
+    <DeprecatedMethod occurrences="3">
       <code>getVariant</code>
       <code>getVariant</code>
-      <code>getVersion</code>
-      <code>getVersion</code>
       <code>getVersion</code>
     </DeprecatedMethod>
   </file>
